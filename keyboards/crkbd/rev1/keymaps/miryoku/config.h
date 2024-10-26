@@ -25,10 +25,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define OLED_TIMEOUT 120000 // 2 minutes
 #define OLED_BRIGHTNESS 100
 
+#define RGB_TIMEOUT OLED_TIMEOUT
+
 #define SPLIT_WPM_ENABLE
 #define SPLIT_OLED_ENABLE
 #define SPLIT_ACTIVITY_ENABLE
-#define SPLIT_TRANSACTION_IDS_USER RPC_OLED_SYNC
+#define SPLIT_TRANSACTION_IDS_USER RPC_OLED_SYNC, RPC_RGB_SYNC
 
 // Include any additional configs at the end
 #include <layout_config.h>

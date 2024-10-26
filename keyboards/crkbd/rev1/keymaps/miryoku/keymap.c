@@ -38,6 +38,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         #ifdef OLED_ENABLE
             oled_timer_reset();
         #endif
+        #ifdef RGB_MATRIX_ENABLE
+            rgb_timer_reset();
+        #endif
     }
 
   return true
