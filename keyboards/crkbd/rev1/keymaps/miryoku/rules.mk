@@ -1,4 +1,5 @@
 SPLIT_KEYBOARD = yes
+CONVERT_TO = helios
 
 OLED_ENABLE = yes
 SERIAL_DRIVER = vendor
