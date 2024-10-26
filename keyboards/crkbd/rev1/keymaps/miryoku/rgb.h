@@ -1,12 +1,16 @@
 
 #pragma once
 
-extern uint8_t rgb_enabled;
-extern bool    rgb_should_restore;
+typedef struct {
+    bool is_timeout;
+    bool is_forced_off;
+} rgb_state_t;
+
+extern uint32_t rgb_timer;
+
 extern uint8_t rgb_mode;
 extern uint8_t rgb_hue;
 extern uint8_t rgb_val;
-uint32_t rgb_timer;
 
 void rgb_keyboard_post_init_user(void);
 
