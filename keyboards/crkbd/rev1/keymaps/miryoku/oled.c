@@ -164,7 +164,7 @@ void oled_keyboard_post_init_user() {
 }
 
 void oled_wipe() {
-    oled_clear();
+    oled_set_cursor(0, 0);
     for(int i = 0; i < oled_max_lines(); i++) {
         oled_write_ln(" ", false);
     }
