@@ -16,6 +16,7 @@ WPM_ENABLE = yes
 # Layout specific keys
 DYNAMIC_MACRO_ENABLE = yes
 KEY_LOCK_ENABLE = yes
+REPEAT_KEY_ENABLE = yes
 
 # RGB code
 ifeq ($(strip $(RGB_MATRIX_ENABLE)), yes)
