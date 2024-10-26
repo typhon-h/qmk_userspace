@@ -1,3 +1,5 @@
+SRC += $(KEYMAP_PATH)/rgb.c
+
 SPLIT_KEYBOARD = yes
 
 OLED_ENABLE = yes

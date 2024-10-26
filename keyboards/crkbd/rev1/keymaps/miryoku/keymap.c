@@ -9,6 +9,7 @@
 #include "oled/layer_label.h"
 #include "transactions.h"
 #include "custom_keycodes.h"
+#include "rgb.h"
 
 typedef union {
   uint32_t raw;
@@ -18,14 +19,6 @@ typedef union {
 } user_config_t;
 
 user_config_t user_config;
-
-#ifdef RGB_MATRIX_ENABLE
-uint8_t rgb_enabled = 0;
-bool rgb_should_restore = 0;
-uint8_t rgb_mode = 0;
-uint8_t rgb_hue = 0;
-uint8_t rgb_val = 0;
-#endif
 
 #ifdef OLED_ENABLE
 uint32_t oled_timer;
@@ -121,6 +114,7 @@ void housekeeping_task_oled(void) {
         is_oled_enabled = !(timer_elapsed32(oled_timer) > get_oled_timeout());
     }
 
+    // timeout code, will be fully refactored
     if(rgb_should_restore) {
         !(timer_elapsed32(oled_timer) > get_oled_timeout())? rgb_matrix_enable_noeeprom() : rgb_matrix_disable_noeeprom();
     } else {
@@ -157,13 +151,11 @@ void keyboard_post_init_user(void) {
     #ifdef OLED_ENABLE
         transaction_register_rpc(RPC_OLED_SYNC, oled_sync_handler);
     #endif
+
     #ifdef RGB_MATRIX_ENABLE
-        rgb_enabled = rgb_matrix_is_enabled();
-        rgb_should_restore = rgb_enabled;
-        rgb_mode = rgb_matrix_get_mode();
-        rgb_hue = rgb_matrix_get_hue();
-        rgb_val = rgb_matrix_get_val();
+        rgb_keyboard_post_init_user();
     #endif
+
     user_config.raw = eeconfig_read_user();
 }
 
@@ -208,64 +200,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
          #endif
         break;
     
-    #ifdef RGB_MATRIX_ENABLE
-    case RGB_TOG:
-        if (record->event.pressed) {
-            rgb_matrix_toggle_noeeprom();
-            rgb_should_restore = rgb_matrix_is_enabled();
-        }
-        break;
-    case RGB_MOD:
-        if (record->event.pressed) {
-            if(get_mods() & MOD_MASK_SHIFT) {
-                rgb_matrix_step_reverse_noeeprom();
-            } else {
-                rgb_matrix_step_noeeprom();
-            }
-        }
-        break;
-    case RGB_HUI:
-        if (record->event.pressed) {
-            if(get_mods() & MOD_MASK_SHIFT) {
-                rgb_matrix_decrease_hue_noeeprom();
-            } else {
-                rgb_matrix_increase_hue_noeeprom();
-            }
-        }
-        break; 
-    case RGB_SAI: // do value instead of saturation
-        if (record->event.pressed) {
-            if(get_mods() & MOD_MASK_SHIFT) {
-                rgb_matrix_decrease_val_noeeprom();
-            } else {
-                rgb_matrix_increase_val_noeeprom();
-            }
-        }
-        break;
-    case RGB_VAI: // save state to eeprom
-        if (record->event.pressed) {
-            if(rgb_enabled != rgb_matrix_is_enabled()) {
-                rgb_enabled = rgb_matrix_is_enabled();
-                rgb_enabled? rgb_matrix_enable() : rgb_matrix_disable();
-            }
-
-            if(rgb_mode != rgb_matrix_get_mode()) {
-                rgb_mode = rgb_matrix_get_mode();
-                rgb_matrix_mode(rgb_mode);
-            }
-
-            if(rgb_hue != rgb_matrix_get_hue() || rgb_val != rgb_matrix_get_val()) {
-                rgb_hue = rgb_matrix_get_hue();
-                rgb_val = rgb_matrix_get_val();
-                rgb_matrix_sethsv(rgb_hue, rgb_matrix_get_sat(), rgb_val);
-            }
-        }
-        break;
-    #endif
-
     default:
         break;
   }
 
-  return true;
+  return true
+    #ifdef RGB_MATRIX_ENABLE
+    && rgb_process_keycode(keycode)
+    #endif
+  ;
 }
