@@ -1,6 +1,7 @@
 
 #include QMK_KEYBOARD_H
 #include "rgb.h"
+#include "oled.h"
 
 uint8_t rgb_enabled        = 0;
 bool    rgb_should_restore = 0;
@@ -16,7 +17,7 @@ void rgb_keyboard_post_init_user() {
     rgb_val = rgb_matrix_get_val();
 }
 
-void rgb_process_keycode(uint16_t keycode) {
+bool rgb_process_keycode(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case RGB_TOG:
             if (record->event.pressed) {
@@ -75,4 +76,13 @@ void rgb_process_keycode(uint16_t keycode) {
             break;
     }
     return true;
+}
+
+void housekeeping_task_rgb() {
+    // timeout code, will be fully refactored
+    if (rgb_should_restore) {
+        !(timer_elapsed32(oled_timer) > get_oled_timeout()) ? rgb_matrix_enable_noeeprom() : rgb_matrix_disable_noeeprom();
+    } else {
+        rgb_matrix_disable_noeeprom();
+    }
 }

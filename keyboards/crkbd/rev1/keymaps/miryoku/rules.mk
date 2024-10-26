@@ -1,5 +1,3 @@
-SRC += $(KEYMAP_PATH)/rgb.c
-
 SPLIT_KEYBOARD = yes
 
 OLED_ENABLE = yes
@@ -18,9 +16,15 @@ WPM_ENABLE = yes
 DYNAMIC_MACRO_ENABLE = yes
 KEY_LOCK_ENABLE = yes
 
+# RGB code
+ifeq ($(strip $(RGB_MATRIX_ENABLE)), yes)
+    SRC += $(KEYMAP_PATH)/rgb.c
+endif
 
-
+# OLED code
 ifeq ($(strip $(OLED_ENABLE)), yes)
+    SRC += $(KEYMAP_PATH)/oled.c
+
     ifdef OCEAN_DREAM_ENABLE
         ifeq ($(strip $(OCEAN_DREAM_ENABLE)), yes)
             SRC += oled/ocean_dream.c

@@ -11,4 +11,6 @@ extern uint8_t rgb_val;
 
 void rgb_keyboard_post_init_user(void);
 
-void rgb_process_keycode(uint16_t keycode);
+bool rgb_process_keycode(uint16_t keycode, keyrecord_t *record);
+
+void housekeeping_task_rgb(void);
