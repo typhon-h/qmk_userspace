@@ -8,7 +8,7 @@
 #include "transactions.h"
 #include "custom_keycodes.h"
 
-bool is_oled_enabled = true;
+bool is_oled_timeout = false;
 uint32_t oled_timer = 0;
 
 
@@ -29,7 +29,7 @@ void oled_timer_reset(void) {
 }
 
 void oled_sync_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
-    memcpy(&is_oled_enabled, in_data, in_buflen);
+    memcpy(&is_oled_timeout, in_data, in_buflen);
 }
 
 void print_slave(void) {
@@ -69,7 +69,7 @@ void print_master(void) {
 
 bool oled_task_user(void) {
 
-    if (is_oled_enabled) {
+    if (!is_oled_timeout) {
         if (is_keyboard_master()) {
             print_master();
         } else {
@@ -87,18 +87,18 @@ void housekeeping_task_oled(void) {
     static uint16_t last_sync  = false;
     static bool     last_state = false;
 
-    is_oled_enabled = timer_elapsed32(oled_timer) < OLED_TIMEOUT;
+    is_oled_timeout = timer_elapsed32(oled_timer) > OLED_TIMEOUT;
 
     if (timer_elapsed32(last_sync) > 250) {
         needs_sync = true;
-    } else if (memcmp(&is_oled_enabled, &last_state, sizeof(last_state))) {
+    } else if (memcmp(&is_oled_timeout, &last_state, sizeof(last_state))) {
         needs_sync = true;
-        memcpy(&last_state, &is_oled_enabled, sizeof(last_state));
+        memcpy(&last_state, &is_oled_timeout, sizeof(last_state));
     }
 
     // Perform the sync if requested
     if (needs_sync) {
-        if (transaction_rpc_send(RPC_OLED_SYNC, sizeof(is_oled_enabled), &is_oled_enabled)) {
+        if (transaction_rpc_send(RPC_OLED_SYNC, sizeof(is_oled_timeout), &is_oled_timeout)) {
             last_sync = timer_read32();
         }
     }

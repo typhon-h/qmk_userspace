@@ -544,7 +544,7 @@ void render_stars(void) {
             animation_counter = increment_counter(animation_counter, NUMBER_OF_FRAMES);
     }
 
-    if (!is_oled_enabled) {
+    if (is_oled_timeout) {
         oled_off();
         return;
     }

@@ -5,7 +5,7 @@ uint32_t oled_timer;
 
 void     oled_timer_reset(void);
 
-extern bool     is_oled_enabled;
+extern bool     is_oled_timeout;
 extern bool     is_oled_toggled;
 extern uint32_t oled_timer;
 
