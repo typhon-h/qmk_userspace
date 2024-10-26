@@ -3,7 +3,6 @@
 
 uint32_t oled_timer;
 
-uint32_t get_oled_timeout(void);
 void     oled_timer_reset(void);
 
 extern bool     is_oled_enabled;

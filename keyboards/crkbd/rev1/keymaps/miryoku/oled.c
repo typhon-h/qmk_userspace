@@ -9,7 +9,6 @@
 #include "custom_keycodes.h"
 
 bool is_oled_enabled = true;
-bool is_oled_toggled = true;
 uint32_t oled_timer = 0;
 
 
@@ -27,12 +26,6 @@ user_config_t user_config;
 
 void oled_timer_reset(void) {
     oled_timer = timer_read32();
-}
-
-uint32_t get_oled_timeout(void) {
-    uint32_t timeout = OLED_TIMEOUT;
-
-    return timeout;
 }
 
 void oled_sync_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
@@ -75,19 +68,17 @@ void print_master(void) {
 }
 
 bool oled_task_user(void) {
-    if (!is_oled_enabled) {
-        oled_clear();
-        oled_off();
-        return false;
+
+    if (is_oled_enabled) {
+        if (is_keyboard_master()) {
+            print_master();
+        } else {
+            print_slave();
+        }
     } else {
-        oled_on();
+        oled_off();
     }
 
-    if (is_keyboard_master()) {
-        print_master();
-    } else {
-        print_slave();
-    }
     return false;
 }
 
@@ -96,19 +87,13 @@ void housekeeping_task_oled(void) {
     static uint16_t last_sync  = false;
     static bool     last_state = false;
 
-    if (!is_oled_toggled) {
-        is_oled_enabled = false;
-    } else {
-        is_oled_enabled = !(timer_elapsed32(oled_timer) > get_oled_timeout());
-    }
-
-    if (memcmp(&is_oled_enabled, &last_state, sizeof(last_state))) {
-        needs_sync = true;
-        memcpy(&last_state, &is_oled_enabled, sizeof(last_state));
-    }
+    is_oled_enabled = timer_elapsed32(oled_timer) < OLED_TIMEOUT;
 
     if (timer_elapsed32(last_sync) > 250) {
         needs_sync = true;
+    } else if (memcmp(&is_oled_enabled, &last_state, sizeof(last_state))) {
+        needs_sync = true;
+        memcpy(&last_state, &is_oled_enabled, sizeof(last_state));
     }
 
     // Perform the sync if requested
@@ -128,12 +113,13 @@ bool oled_process_keycode(uint16_t keycode, keyrecord_t *record) {
     case OLED_EVENT:
             if (record->event.pressed) {
                 if(get_mods() & MOD_MASK_GUI) {
-                    #ifdef OLED_ENABLE
-                        is_oled_toggled = !is_oled_toggled;
-                        if (is_oled_toggled) {
-                            oled_on();
-                        }
-                    #endif
+                    // TODO: fix the toggle here so that it works with the fixed timeout
+                    // #ifdef OLED_ENABLE
+                    //     is_oled_toggled = !is_oled_toggled;
+                    //     if (is_oled_toggled) {
+                    //         oled_on();
+                    //     }
+                    // #endif
                 } else if (get_mods() & MOD_MASK_SHIFT) {
                     #ifdef KEYBOARD_PET_ENABLE
                         user_config.pet = next_pet(user_config.pet, false);

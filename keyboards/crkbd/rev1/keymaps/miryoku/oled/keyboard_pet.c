@@ -2,6 +2,7 @@
 #include QMK_KEYBOARD_H
 #include "keyboard_pet.h"
 #include "layer_label.h"
+#include "../oled.h"
 
 /* timers */
 uint32_t anim_timer = 0;
@@ -528,10 +529,59 @@ static const PET_ANIMATION_T PETS[NUM_PETS] PROGMEM = { // Can persist up to 8 i
     },
 };
 
+PET_T next_pet(PET_T curr_pet, bool is_forward) {
+    is_forward ? curr_pet++ : curr_pet--;
+   return curr_pet % NUM_PETS;
+}
+
+/* animation */
+void animate_pet(int PET_X, int PET_Y, PET_T pet) {
+    /* jump */
+    if (isJumping || !showedJump) {
+        /* clear */
+        oled_set_cursor(PET_X, PET_Y + 3);
+        oled_write("     ", false);
+
+        oled_set_cursor(PET_X, PET_Y - 1);
+
+        showedJump = true;
+    } else {
+        /* clear */
+        oled_set_cursor(PET_X, PET_Y - 1);
+        oled_write("     ", false);
+
+        oled_set_cursor(PET_X, PET_Y);
+    }
+
+    /* switch frame */
+    current_frame = (current_frame + 1) % 2;
+
+    /* current status */
+    if (is_caps_word_on()) {
+        oled_write_raw_P(PETS[pet].bark[current_frame], ANIM_SIZE);
+
+    } else if (get_highest_layer(layer_state) != BASE) {
+        oled_write_raw_P(PETS[pet].sneak[current_frame], ANIM_SIZE);
+
+    } else if (current_wpm <= MIN_WALK_SPEED) {
+        oled_write_raw_P(PETS[pet].sit[current_frame], ANIM_SIZE);
+
+    } else if (current_wpm <= MIN_RUN_SPEED) {
+        oled_write_raw_P(PETS[pet].walk[current_frame], ANIM_SIZE);
+
+    } else {
+        oled_write_raw_P(PETS[pet].run[current_frame], ANIM_SIZE);
+    }
+}
+
+
+
 /* logic */
 void render_pet(int PET_X, int PET_Y, PET_T pet) {
 
-    if(!is_oled_on()) {
+    /* the animation prevents the normal timeout from occuring */
+    if (!is_oled_enabled) {
+        oled_off();
         return;
     }
 
@@ -541,64 +591,9 @@ void render_pet(int PET_X, int PET_Y, PET_T pet) {
 
     /* KEYBOARD PET VARIABLES END */
 
-    /* animation */
-    void animate_pet(void) {
-        /* jump */
-        if (isJumping || !showedJump) {
-            /* clear */
-            oled_set_cursor(PET_X, PET_Y + 3);
-            oled_write("     ", false);
-
-            oled_set_cursor(PET_X, PET_Y - 1);
-
-            showedJump = true;
-        } else {
-            /* clear */
-            oled_set_cursor(PET_X, PET_Y - 1);
-            oled_write("     ", false);
-
-            oled_set_cursor(PET_X, PET_Y);
-        }
-
-        /* switch frame */
-        current_frame = (current_frame + 1) % 2;
-
-        /* current status */
-        if (is_caps_word_on()) {
-            oled_write_raw_P(PETS[pet].bark[current_frame], ANIM_SIZE);
-
-        } else if (get_highest_layer(layer_state) != BASE) {
-            oled_write_raw_P(PETS[pet].sneak[current_frame], ANIM_SIZE);
-
-        } else if (current_wpm <= MIN_WALK_SPEED) {
-            oled_write_raw_P(PETS[pet].sit[current_frame], ANIM_SIZE);
-
-        } else if (current_wpm <= MIN_RUN_SPEED) {
-            oled_write_raw_P(PETS[pet].walk[current_frame], ANIM_SIZE);
-
-        } else {
-            oled_write_raw_P(PETS[pet].run[current_frame], ANIM_SIZE);
-        }
-    }
-
-    #    if OLED_TIMEOUT > 0
-    /* the animation prevents the normal timeout from occuring */
-    if (last_input_activity_elapsed() > OLED_TIMEOUT && last_led_activity_elapsed() > OLED_TIMEOUT) {
-        oled_off();
-        return;
-    } else {
-        oled_on();
-    }
-#    endif
-
     /* animation timer */
     if (timer_elapsed32(anim_timer) > ANIM_FRAME_DURATION) {
         anim_timer = timer_read32();
-        animate_pet();
+        animate_pet(PET_X, PET_Y, pet);
     }
-}
-
-PET_T next_pet(PET_T curr_pet, bool is_forward) {
-    is_forward ? curr_pet++ : curr_pet--;
-   return curr_pet % NUM_PETS;
 }

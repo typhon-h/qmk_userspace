@@ -79,9 +79,10 @@ bool rgb_process_keycode(uint16_t keycode, keyrecord_t *record) {
 }
 
 void housekeeping_task_rgb() {
-    // timeout code, will be fully refactored
+    // TODO: duplicate the OLED timeout communication for LED timeouts, should fix staying on issue
+    // consider disable rgb_should_restore property while making the transition
     if (rgb_should_restore) {
-        !(timer_elapsed32(oled_timer) > get_oled_timeout()) ? rgb_matrix_enable_noeeprom() : rgb_matrix_disable_noeeprom();
+        (is_oled_enabled) ? rgb_matrix_enable_noeeprom() : rgb_matrix_disable_noeeprom();
     } else {
         rgb_matrix_disable_noeeprom();
     }

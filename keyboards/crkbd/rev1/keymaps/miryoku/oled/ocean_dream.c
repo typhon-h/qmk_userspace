@@ -18,6 +18,7 @@
 #include "ocean_dream.h"
 #include "quantum.h"
 #include "print.h"
+#include "../oled.h"
 
 // Calculated Parameters
 #define TWINKLE_PROBABILITY_MODULATOR 100 / TWINKLE_PROBABILITY                            // CALCULATED: Don't Touch
@@ -501,9 +502,6 @@ static void animate_shooting_stars(void) {
  * Calls all different animations at different rates
  */
 void render_stars(void) {
-    if(!is_oled_on()) {
-        return;
-    }
 
     current_wpm             = get_current_wpm();
 
@@ -546,9 +544,13 @@ void render_stars(void) {
             animation_counter = increment_counter(animation_counter, NUMBER_OF_FRAMES);
     }
 
+    if (!is_oled_enabled) {
+        oled_off();
+        return;
+    }
 
     // Turn screen on/off based on typing and timeout
-    if (timer_elapsed32(starry_night_anim_timer) > STARRY_NIGHT_ANIM_FRAME_DURATION && is_oled_on()) {
+    if (timer_elapsed32(starry_night_anim_timer) > STARRY_NIGHT_ANIM_FRAME_DURATION) {
         starry_night_anim_timer = timer_read32();
         render_stars_anim();
     }
