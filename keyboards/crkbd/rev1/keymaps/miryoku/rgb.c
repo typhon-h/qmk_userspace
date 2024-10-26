@@ -56,7 +56,7 @@ bool rgb_process_keycode(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case RGB_VAI:
+        case RGB_VAI: // TODO: maybe use this key to also save oled on/off state to eeprom
             if (record->event.pressed) {
                 // if (is_rgb_enabled != rgb_matrix_is_enabled()) {
                 //     is_rgb_enabled = rgb_matrix_is_enabled();

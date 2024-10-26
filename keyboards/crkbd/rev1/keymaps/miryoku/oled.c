@@ -8,7 +8,11 @@
 #include "transactions.h"
 #include "custom_keycodes.h"
 
-bool is_oled_timeout = false;
+oled_state_t oled_state = {
+    .is_timeout = false,
+    .is_forced_off = false
+};
+
 uint32_t oled_timer = 0;
 
 
@@ -25,11 +29,13 @@ user_config_t user_config;
 
 
 void oled_timer_reset(void) {
-    oled_timer = timer_read32();
+    if (!oled_state.is_forced_off) {
+        oled_timer = timer_read32();
+    }
 }
 
 void oled_sync_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
-    memcpy(&is_oled_timeout, in_data, in_buflen);
+    memcpy(&oled_state, in_data, in_buflen);
 }
 
 void print_slave(void) {
@@ -69,14 +75,18 @@ void print_master(void) {
 
 bool oled_task_user(void) {
 
-    if (!is_oled_timeout) {
-        if (is_keyboard_master()) {
-            print_master();
-        } else {
-            print_slave();
+    if (oled_state.is_forced_off || oled_state.is_timeout) {
+        if(is_oled_on()) {
+            oled_wipe();
         }
-    } else {
         oled_off();
+        return false;
+    }
+
+    if (is_keyboard_master()) {
+        print_master();
+    } else {
+        print_slave();
     }
 
     return false;
@@ -85,20 +95,20 @@ bool oled_task_user(void) {
 void housekeeping_task_oled(void) {
     bool            needs_sync = false;
     static uint16_t last_sync  = false;
-    static bool     last_state = false;
+    static oled_state_t     last_state = {};
 
-    is_oled_timeout = timer_elapsed32(oled_timer) > OLED_TIMEOUT;
+    oled_state.is_timeout = timer_elapsed32(oled_timer) > OLED_TIMEOUT;
 
     if (timer_elapsed32(last_sync) > 250) {
         needs_sync = true;
-    } else if (memcmp(&is_oled_timeout, &last_state, sizeof(last_state))) {
+    } else if (memcmp(&oled_state, &last_state, sizeof(last_state))) {
         needs_sync = true;
-        memcpy(&last_state, &is_oled_timeout, sizeof(last_state));
+        memcpy(&last_state, &oled_state, sizeof(last_state));
     }
 
     // Perform the sync if requested
     if (needs_sync) {
-        if (transaction_rpc_send(RPC_OLED_SYNC, sizeof(is_oled_timeout), &is_oled_timeout)) {
+        if (transaction_rpc_send(RPC_OLED_SYNC, sizeof(oled_state), &oled_state)) {
             last_sync = timer_read32();
         }
     }
@@ -113,13 +123,9 @@ bool oled_process_keycode(uint16_t keycode, keyrecord_t *record) {
     case OLED_EVENT:
             if (record->event.pressed) {
                 if(get_mods() & MOD_MASK_GUI) {
-                    // TODO: fix the toggle here so that it works with the fixed timeout
-                    // #ifdef OLED_ENABLE
-                    //     is_oled_toggled = !is_oled_toggled;
-                    //     if (is_oled_toggled) {
-                    //         oled_on();
-                    //     }
-                    // #endif
+                    #ifdef OLED_ENABLE
+                        oled_state.is_forced_off = !oled_state.is_forced_off;
+                    #endif
                 } else if (get_mods() & MOD_MASK_SHIFT) {
                     #ifdef KEYBOARD_PET_ENABLE
                         user_config.pet = next_pet(user_config.pet, false);
@@ -154,4 +160,10 @@ bool oled_process_keycode(uint16_t keycode, keyrecord_t *record) {
 void oled_keyboard_post_init_user() {
     transaction_register_rpc(RPC_OLED_SYNC, oled_sync_handler);
     user_config.raw = eeconfig_read_user();
+}
+
+void oled_wipe() {
+    for(int i = 0; i < oled_max_lines(); i++) {
+        oled_write_ln(" ", false);
+    }
 }

@@ -5,9 +5,14 @@ uint32_t oled_timer;
 
 void     oled_timer_reset(void);
 
-extern bool     is_oled_timeout;
-extern bool     is_oled_toggled;
-extern uint32_t oled_timer;
+
+typedef struct {
+    bool is_timeout;
+    bool is_forced_off;
+} oled_state_t;
+
+extern oled_state_t oled_state;
+extern  uint32_t oled_timer;
 
 void print_slave(void);
 
@@ -20,3 +25,5 @@ bool oled_process_keycode(uint16_t keycode, keyrecord_t* record);
 void housekeeping_task_oled(void);
 
 void oled_keyboard_post_init_user(void);
+
+void oled_wipe(void);

@@ -503,6 +503,14 @@ static void animate_shooting_stars(void) {
  */
 void render_stars(void) {
 
+    if (oled_state.is_forced_off || oled_state.is_timeout) {
+        if(is_oled_on()) {
+            oled_wipe();
+        }
+        oled_off();
+        return;
+    }
+
     current_wpm             = get_current_wpm();
 
     void render_stars_anim(void) {
@@ -542,11 +550,6 @@ void render_stars(void) {
 #endif
 
             animation_counter = increment_counter(animation_counter, NUMBER_OF_FRAMES);
-    }
-
-    if (is_oled_timeout) {
-        oled_off();
-        return;
     }
 
     // Turn screen on/off based on typing and timeout

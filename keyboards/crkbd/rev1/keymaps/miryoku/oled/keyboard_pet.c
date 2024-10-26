@@ -580,7 +580,10 @@ void animate_pet(int PET_X, int PET_Y, PET_T pet) {
 void render_pet(int PET_X, int PET_Y, PET_T pet) {
 
     /* the animation prevents the normal timeout from occuring */
-    if (is_oled_timeout) {
+    if (oled_state.is_forced_off || oled_state.is_timeout) {
+        if(is_oled_on()) {
+            oled_wipe();
+        }
         oled_off();
         return;
     }
