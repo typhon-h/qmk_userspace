@@ -125,6 +125,7 @@ bool oled_process_keycode(uint16_t keycode, keyrecord_t *record) {
                 if(get_mods() & MOD_MASK_GUI) {
                     #ifdef OLED_ENABLE
                         oled_state.is_forced_off = !oled_state.is_forced_off;
+                        oled_timer_reset();
                     #endif
                 } else if (get_mods() & MOD_MASK_SHIFT) {
                     #ifdef KEYBOARD_PET_ENABLE
@@ -163,6 +164,7 @@ void oled_keyboard_post_init_user() {
 }
 
 void oled_wipe() {
+    oled_clear();
     for(int i = 0; i < oled_max_lines(); i++) {
         oled_write_ln(" ", false);
     }
