@@ -64,3 +64,28 @@
 #    define ENABLE_RGB_MATRIX_SOLID_SPLASH
 #    define ENABLE_RGB_MATRIX_SOLID_MULTISPLASH
 #endif
+
+
+
+
+
+
+
+#define LED_MAP( \
+            L02,  L01,  L00,                            L27,  L28, L29,           \
+            L03,  L04,  L05,                            L32,  L31, L30,           \
+      L24,  L23,  L18,  L17,  L10,  L09,          L36,  L37,  L44, L45, L50, L51, \
+      L25,  L22,  L19,  L16,  L11,  L08,          L35,  L38,  L43, L46, L49, L52, \
+      L26,  L21,  L20,  L15,  L12,  L07,          L34,  L39,  L42, L47, L48, L53, \
+                        L14,  L13,  L06,          L33,  L40,  L41                 \
+) \
+{ \
+L00, L01, L02, L03, L04, L05, L06, L07, L08, L09, \
+L10, L11, L12, L13, L14, L15, L16, L17, L18, L19, \
+L20, L21, L22, L23, L24, L25, L26, L27, L28, L29, \
+L30, L31, L32, L33, L34, L35, L36, L37, L38, L39, \
+L40, L41, L42, L43, L44, L45, L46, L47, L48, L49, \
+L50, L51, L52, L53 \
+}
+
+

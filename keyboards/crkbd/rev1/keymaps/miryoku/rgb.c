@@ -6,6 +6,51 @@
 
 int underglow_leds[UNDERGLOW_NUM] = {0,1,2,3,4,5,27,28,29,30,31,32};
 
+int nav_layer_led[TOTAL_LEDS][3] = LED_MAP( \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
+      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_GREEN},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
+                                          {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}                 \
+);
+
+int num_layer_led[TOTAL_LEDS][3] = LED_MAP( \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
+      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_BLUE},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
+                                          {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}                 \
+);
+
+int media_layer_led[TOTAL_LEDS][3] = LED_MAP( \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
+      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_RED},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
+                                          {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}                 \
+);
+
+int mouse_layer_led[TOTAL_LEDS][3] = LED_MAP( \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
+      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_YELLOW},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
+                                          {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}                 \
+);
+
+int sym_layer_led[TOTAL_LEDS][3] = LED_MAP( \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
+      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_PINK},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
+                                          {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}                 \
+);
+
 rgb_state_t rgb_state = {
     .is_timeout = false,
     .is_forced_off = true,
@@ -145,9 +190,42 @@ bool dynamic_macro_record_end_user(int8_t direction) {
 }
 #endif
 
-
 bool rgb_matrix_indicators_user(void) 
 {	
+
+    int (*layout)[3];
+    bool is_perkey_layer = true;
+    switch (get_highest_layer(layer_state)) {
+        case NAV:
+            layout = nav_layer_led;
+            break;
+        case MOUSE:
+            layout = mouse_layer_led;
+            break;
+        case MEDIA:
+            layout = media_layer_led;
+            break;
+        case NUM:
+            layout = num_layer_led;
+            break;
+        case SYM:
+            layout = sym_layer_led;
+            break;
+        default:
+            is_perkey_layer = false;
+            break;
+    }
+
+    if(is_perkey_layer) {
+        for(int i = 0; i < TOTAL_LEDS; i++) {
+        int led_trans[3] = {1,1,1};
+        if (memcmp(layout[i], led_trans, sizeof(layout[i]))) {
+            RGB rgb = hsv_to_rgb((HSV){layout[i][0], layout[i][1], (layout[i][2] < rgb_matrix_get_val())? layout[i][2] : rgb_matrix_get_val()});
+            rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
+        }
+    }
+    }
+
     #ifdef DYNAMIC_MACRO_ENABLE
     if (rgb_state.is_recording)
     {
@@ -168,6 +246,8 @@ bool rgb_matrix_indicators_user(void)
         macro_led_timer = timer_read32();
     }
     #endif
+
+
 
 
     return false;
