@@ -45,25 +45,6 @@ void print_slave(void) {
 }
 
 void print_master(void) {
-    oled_set_cursor(0, 0);
-
-    oled_set_cursor(0, 7);
-    oled_write("     ", false);
-
-    oled_set_cursor(0, 8);
-    oled_write("     ", false);
-
-    /* wpm counter */
-    uint8_t n = get_current_wpm();
-    char    wpm_str[6];
-    oled_set_cursor(0, 9);
-    wpm_str[5] = '\0';
-    wpm_str[3] = wpm_str[4] = ' ';
-    wpm_str[2]              = '0' + n % 10;
-    wpm_str[1]              = '0' + (n /= 10) % 10;
-    wpm_str[0]              = '0' + n / 10;
-    oled_write(wpm_str, false);
-
 #ifdef KEYBOARD_PET_ENABLE
     render_pet(0, 12, user_config.pet);
 #endif
