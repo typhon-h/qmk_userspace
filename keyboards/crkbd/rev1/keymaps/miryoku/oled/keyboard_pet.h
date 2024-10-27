@@ -15,7 +15,6 @@ typedef struct {
     char sit[2][ANIM_SIZE];
     char walk[2][ANIM_SIZE];
     char run[2][ANIM_SIZE];
-    char bark[2][ANIM_SIZE];
     char sneak[2][ANIM_SIZE];
 } PET_ANIMATION_T;
 
@@ -24,7 +23,4 @@ typedef enum { LUNA, SQUIRTLE, CHARMANDER, BULBASAUR, NUM_PETS } PET_T;
 void render_pet(int PET_X, int PET_Y, PET_T pet);
 PET_T next_pet(PET_T curr_pet, bool is_forward);
 
-extern bool isJumping;
-extern bool showedJump;
 extern bool isSneaking;
-extern bool isBarking;

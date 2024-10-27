@@ -150,16 +150,7 @@ bool oled_process_keycode(uint16_t keycode, keyrecord_t *record) {
                 }
             }
         return false; // Skip all further processing of this key
-    case LT(NAV, KC_SPC):
-    case KC_SPC:
-        #ifdef KEYBOARD_PET_ENABLE
-            isJumping = record->event.pressed;
-            if (isJumping) {
-                showedJump = false;  
-            }     
-         #endif
-        break;
-    
+
     default:
         break;
   }
