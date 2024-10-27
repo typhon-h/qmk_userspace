@@ -4,6 +4,7 @@
 typedef struct {
     bool is_timeout;
     bool is_forced_off;
+    bool is_recording;
 } rgb_state_t;
 
 extern uint32_t rgb_timer;
@@ -11,6 +12,9 @@ extern uint32_t rgb_timer;
 extern uint8_t rgb_mode;
 extern uint8_t rgb_hue;
 extern uint8_t rgb_val;
+
+#define UNDERGLOW_NUM 12
+int underglow_leds[UNDERGLOW_NUM];
 
 void rgb_keyboard_post_init_user(void);
 

@@ -1,11 +1,15 @@
 
 #include QMK_KEYBOARD_H
 #include "rgb.h"
+#include "color.h"
 #include "transactions.h"
+
+int underglow_leds[UNDERGLOW_NUM] = {0,1,2,3,4,5,27,28,29,30,31,32};
 
 rgb_state_t rgb_state = {
     .is_timeout = false,
-    .is_forced_off = true
+    .is_forced_off = true,
+    .is_recording = false
 }; // look at merging this with the oled timer stuff as a class
 
 uint32_t rgb_timer = 0;
@@ -120,4 +124,51 @@ void rgb_sync_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen
 
 void rgb_timer_reset(void) {
     rgb_timer = timer_read32();
+}
+
+#ifdef DYNAMIC_MACRO_ENABLE
+
+bool isRecordingLedOn = false;
+uint32_t macro_led_timer;
+
+bool dynamic_macro_record_start_user(int8_t direction) {
+    rgb_state.is_recording = true;
+
+    return false;
+}
+
+bool dynamic_macro_record_end_user(int8_t direction) {
+    rgb_state.is_recording = false;
+    isRecordingLedOn = false;
+
+    return false;
+}
+#endif
+
+
+bool rgb_matrix_indicators_user(void) 
+{	
+    #ifdef DYNAMIC_MACRO_ENABLE
+    if (rgb_state.is_recording)
+    {
+        if (timer_elapsed32(macro_led_timer) > 500) 
+        {
+            isRecordingLedOn = !isRecordingLedOn;
+            macro_led_timer = timer_read32();
+        }
+        if (isRecordingLedOn)
+        {
+            HSV hsv = {.h = 0, .s = 255, .v = rgb_matrix_get_val()};
+            RGB rgb = hsv_to_rgb(hsv);
+            for(int i = 0; i < UNDERGLOW_NUM; i++) {
+                rgb_matrix_set_color(underglow_leds[i], rgb.r, rgb.b, rgb.g);
+            }
+        }
+    } else {
+        macro_led_timer = timer_read32();
+    }
+    #endif
+
+
+    return false;
 }

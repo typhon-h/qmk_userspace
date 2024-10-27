@@ -33,6 +33,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define SPLIT_LAYER_STATE_ENABLE
 #define SPLIT_TRANSACTION_IDS_USER RPC_OLED_SYNC, RPC_RGB_SYNC
 
+#define DYNAMIC_MACRO_NO_NESTING
+
 // Include any additional configs at the end
 #include <layout_config.h>
 #include <rgb_config.h>
