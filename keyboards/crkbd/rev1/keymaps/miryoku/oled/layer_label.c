@@ -393,39 +393,39 @@ static const char PROGMEM LAYER_LABELS[NUM_LAYERS][LAYER_LABEL_SIZE] = {
 			0x03, 0x03, 0x03, 0x03, 0x01, 0x00, 0x00, 0x00, 0x03, 0x03, 0x03, 0x03, 0x03, 0x00, 0x00, 0x00
         },
 };
-
+uint16_t base_layer = 0;
 layer_state_t default_layer_state_set_user(layer_state_t state) { // manage locked layer labels
     switch (state) {
 		case 0:
 		case 1:
-			oled_state.base_layer = BASE;
+			base_layer = BASE;
 			break;
 		case 2:
-			oled_state.base_layer = EXTRA;
+			base_layer = EXTRA;
 			break;
 		case 4:
-			oled_state.base_layer = TAP;
+			base_layer = TAP;
 			break;
 		case 16:
-			oled_state.base_layer = NAV;
+			base_layer = NAV;
 			break;
 		case 32:
-			oled_state.base_layer = MOUSE;
+			base_layer = MOUSE;
 			break;
 		case 64:
-			oled_state.base_layer = MEDIA;
+			base_layer = MEDIA;
 			break;
 		case 128:
-			oled_state.base_layer = NUM;
+			base_layer = NUM;
 			break;
 		case 256:
-			oled_state.base_layer = SYM;
+			base_layer = SYM;
 			break;
 		case 512:
-			oled_state.base_layer = FUN;
+			base_layer = FUN;
 			break;
         default:
-            oled_state.base_layer = UNKNOWN;
+            base_layer = UNKNOWN;
     }
     return state;
 }
@@ -433,7 +433,7 @@ layer_state_t default_layer_state_set_user(layer_state_t state) { // manage lock
 void render_label() {
     switch (get_highest_layer(layer_state)) {
         case BASE:
-            oled_write_raw_P(LAYER_LABELS[oled_state.base_layer], LAYER_LABEL_SIZE);
+            oled_write_raw_P(LAYER_LABELS[base_layer], LAYER_LABEL_SIZE);
             break;
         case BUTTON:
             oled_write_raw_P(LAYER_LABELS[BUTTON], LAYER_LABEL_SIZE);

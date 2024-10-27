@@ -10,7 +10,6 @@
 oled_state_t oled_state = {
     .is_timeout = false,
     .is_forced_off = false,
-    .base_layer = 0
 };
 
 uint32_t oled_timer = 0;
@@ -63,13 +62,13 @@ void oled_sync_handler(uint8_t in_buflen, const void* in_data, uint8_t out_bufle
     memcpy(&oled_state, in_data, in_buflen);
 }
 
-void print_slave(void) {
+void print_master(void) {
 #ifdef LAYER_LABEL_ENABLE
     render_label();
 #endif
 }
 
-void print_master(void) {
+void print_slave(void) {
     oled_set_cursor(0,0);
     oled_write_raw_P(CORNE_LOGO, sizeof(CORNE_LOGO));
     oled_set_cursor(0,4);
