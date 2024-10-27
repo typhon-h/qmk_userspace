@@ -2,7 +2,6 @@
 #include QMK_KEYBOARD_H
 
 #include "oled.h"
-#include "oled/ocean_dream.h"
 #include "oled/keyboard_pet.h"
 #include "oled/layer_label.h"
 #include "transactions.h"
@@ -10,7 +9,8 @@
 
 oled_state_t oled_state = {
     .is_timeout = false,
-    .is_forced_off = false
+    .is_forced_off = false,
+    .base_layer = 0
 };
 
 uint32_t oled_timer = 0;
@@ -39,17 +39,13 @@ void oled_sync_handler(uint8_t in_buflen, const void* in_data, uint8_t out_bufle
 }
 
 void print_slave(void) {
-#ifdef OCEAN_DREAM_ENABLE
-    render_stars();
+#ifdef LAYER_LABEL_ENABLE
+    render_label();
 #endif
 }
 
 void print_master(void) {
     oled_set_cursor(0, 0);
-
-#ifdef LAYER_LABEL_ENABLE
-    render_label();
-#endif
 
     oled_set_cursor(0, 7);
     oled_write("     ", false);

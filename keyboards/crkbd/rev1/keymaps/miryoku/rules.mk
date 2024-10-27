@@ -4,7 +4,6 @@ CONVERT_TO = helios
 OLED_ENABLE = yes
 SERIAL_DRIVER = vendor
 # Custom OLED options
-OCEAN_DREAM_ENABLE = yes
 KEYBOARD_PET_ENABLE = yes
 LAYER_LABEL_ENABLE = yes
 
@@ -26,13 +25,6 @@ endif
 # OLED code
 ifeq ($(strip $(OLED_ENABLE)), yes)
     SRC += $(KEYMAP_PATH)/oled.c
-
-    ifdef OCEAN_DREAM_ENABLE
-        ifeq ($(strip $(OCEAN_DREAM_ENABLE)), yes)
-            SRC += oled/ocean_dream.c
-            OPT_DEFS += -DOCEAN_DREAM_ENABLE
-        endif
-    endif
 
 	ifdef KEYBOARD_PET_ENABLE
         ifeq ($(strip $(KEYBOARD_PET_ENABLE)), yes)

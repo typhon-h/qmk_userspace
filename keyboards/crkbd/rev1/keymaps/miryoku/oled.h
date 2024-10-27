@@ -1,14 +1,15 @@
 
 #pragma once
 
+#include QMK_KEYBOARD_H
+
 uint32_t oled_timer;
-
 void     oled_timer_reset(void);
-
 
 typedef struct {
     bool is_timeout;
     bool is_forced_off;
+    uint16_t base_layer;
 } oled_state_t;
 
 extern oled_state_t oled_state;
