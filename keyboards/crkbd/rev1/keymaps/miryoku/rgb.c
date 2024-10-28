@@ -3,6 +3,7 @@
 #include "rgb.h"
 #include "color.h"
 #include "transactions.h"
+#include "custom_util.h"
 
 rgb_state_t rgb_state = {
     .is_timeout = false,

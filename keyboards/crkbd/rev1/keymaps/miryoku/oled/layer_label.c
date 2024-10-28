@@ -1,5 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "layer_label.h"
+#include "../custom_util.h"
 #include "keyboard_pet.h"
 #include <stdint.h>
 #include <stdbool.h>

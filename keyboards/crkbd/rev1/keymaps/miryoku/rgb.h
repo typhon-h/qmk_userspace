@@ -25,9 +25,6 @@ void     rgb_timer_reset(void);
 
 void rgb_sync_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data);
 
-enum layers { BASE, EXTRA, TAP, BUTTON, NAV, MOUSE, MEDIA, NUM, SYM, FUN, UNKNOWN, NUM_LAYERS };
-
-
 #define HSV_TRANS 1, 1, 1
 #define UNDERGLOW_NUM 12
 #define PERKEY_NUM 42
