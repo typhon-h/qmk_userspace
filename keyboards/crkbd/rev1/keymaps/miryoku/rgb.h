@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "action.h"
 #include "color.h"
 
 typedef struct {

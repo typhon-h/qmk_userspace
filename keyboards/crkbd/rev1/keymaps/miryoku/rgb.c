@@ -144,8 +144,8 @@ bool dynamic_macro_record_end_user(int8_t direction) {
 }
 #endif
 
-bool rgb_matrix_indicators_user(void) 
-{	
+bool rgb_matrix_indicators_user(void)
+{
 
     int (*layout)[3];
     bool is_perkey_layer = true;
@@ -189,7 +189,7 @@ bool rgb_matrix_indicators_user(void)
     #ifdef DYNAMIC_MACRO_ENABLE
     if (rgb_state.is_recording)
     {
-        if (timer_elapsed32(macro_led_timer) > 500) 
+        if (timer_elapsed32(macro_led_timer) > 500)
         {
             isRecordingLedOn = !isRecordingLedOn;
             macro_led_timer = timer_read32();

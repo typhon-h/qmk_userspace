@@ -12,7 +12,7 @@ typedef struct {
 } oled_state_t;
 
 extern oled_state_t oled_state;
-extern  uint32_t oled_timer;
+extern uint32_t     oled_timer;
 
 void print_slave(void);
 
