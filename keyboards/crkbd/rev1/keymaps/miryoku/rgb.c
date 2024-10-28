@@ -6,49 +6,67 @@
 
 int underglow_leds[UNDERGLOW_NUM] = {0,1,2,3,4,5,27,28,29,30,31,32};
 
-int nav_layer_led[TOTAL_LEDS][3] = LED_MAP( \
-                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
-                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
-      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
-      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_GREEN},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
-      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
-                                          {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}                 \
+int nav_layer_led[TOTAL_LEDS][3] = LED_MAP(                                                                                                                                               \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                                    {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                                   \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                                    {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                                   \
+      {HSV_OFF},  {HSV_WHITE}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_OFF},          {HSV_WHITE},     {HSV_BLUE},      {HSV_BLUE},    {HSV_BLUE},    {HSV_WHITE},   {HSV_OFF}, \
+      {HSV_OFF},  {HSV_GREEN}, {HSV_GREEN},   {HSV_GREEN},   {HSV_GREEN},   {HSV_OFF},          {HSV_RED},       {HSV_YELLOW},    {HSV_YELLOW},  {HSV_YELLOW},  {HSV_YELLOW},  {HSV_OFF}, \
+      {HSV_OFF},  {HSV_OFF},   {HSV_OFF},     {HSV_BLUE},    {HSV_BLUE},    {HSV_OFF},          {HSV_RED},       {HSV_MAGENTA},   {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_OFF}, \
+                                              {HSV_OFF},     {HSV_OFF},     {HSV_OFF},          {HSV_GOLDENROD}, {HSV_GOLDENROD}, {HSV_GOLDENROD}                                         \
 );
 
-int num_layer_led[TOTAL_LEDS][3] = LED_MAP( \
-                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
-                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
-      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
-      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_BLUE},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
-      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
-                                          {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}                 \
+int num_layer_led[TOTAL_LEDS][3] = LED_MAP(                                                                                                                                \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                    \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                    \
+      {HSV_OFF},  {HSV_CYAN},   {HSV_RED},  {HSV_RED},   {HSV_RED},  {HSV_CYAN},          {HSV_OFF},  {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_WHITE}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_YELLOW}, {HSV_RED},  {HSV_RED},   {HSV_RED},  {HSV_MAGENTA},       {HSV_OFF},  {HSV_GREEN},   {HSV_GREEN},   {HSV_GREEN},   {HSV_GREEN}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_YELLOW}, {HSV_RED},  {HSV_RED},   {HSV_RED},  {HSV_MAGENTA},       {HSV_OFF},  {HSV_BLUE},    {HSV_BLUE},    {HSV_OFF},     {HSV_OFF},   {HSV_OFF}, \
+                                            {HSV_WHITE}, {HSV_RED},  {HSV_MAGENTA},       {HSV_OFF},  {HSV_OFF},     {HSV_OFF}                                             \
 );
 
-int media_layer_led[TOTAL_LEDS][3] = LED_MAP( \
-                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
-                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
-      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
-      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_RED},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
-      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
-                                          {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}                 \
+int media_layer_led[TOTAL_LEDS][3] = LED_MAP(                                                                                                                                           \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                                    {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                         \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                                    {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                         \
+      {HSV_OFF},  {HSV_WHITE}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_OFF},          {HSV_PINK},      {HSV_PINK},      {HSV_PINK}, {HSV_PINK}, {HSV_SPRINGGREEN}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_GREEN}, {HSV_GREEN},   {HSV_GREEN},   {HSV_GREEN},   {HSV_OFF},          {HSV_MAGENTA},   {HSV_GREEN},     {HSV_BLUE}, {HSV_BLUE}, {HSV_GREEN},       {HSV_OFF}, \
+      {HSV_OFF},  {HSV_OFF},   {HSV_OFF},     {HSV_BLUE},    {HSV_BLUE},    {HSV_OFF},          {HSV_OFF},       {HSV_OFF},       {HSV_OFF},  {HSV_OFF},  {HSV_OFF},         {HSV_OFF}, \
+                                              {HSV_OFF},     {HSV_OFF},     {HSV_OFF},          {HSV_GOLDENROD}, {HSV_GOLDENROD}, {HSV_BLUE}                                                                                                                                                                                                    \
 );
 
-int mouse_layer_led[TOTAL_LEDS][3] = LED_MAP( \
-                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
-                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
-      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
-      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_YELLOW},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
-      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
-                                          {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}                 \
+int mouse_layer_led[TOTAL_LEDS][3] = LED_MAP(                                                                                                                                                       \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                                    {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                                             \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                                    {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                                             \
+      {HSV_OFF},  {HSV_WHITE}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_OFF},          {HSV_WHITE},     {HSV_BLUE},      {HSV_BLUE},    {HSV_BLUE},    {HSV_WHITE},   {HSV_OFF},           \
+      {HSV_OFF},  {HSV_GREEN}, {HSV_GREEN},   {HSV_GREEN},   {HSV_GREEN},   {HSV_OFF},          {HSV_OFF},       {HSV_YELLOW},    {HSV_YELLOW},  {HSV_YELLOW},  {HSV_YELLOW},  {HSV_OFF},           \
+      {HSV_OFF},  {HSV_OFF},   {HSV_OFF},     {HSV_BLUE},    {HSV_BLUE},    {HSV_OFF},          {HSV_OFF},       {HSV_MAGENTA},   {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_OFF},           \
+                                              {HSV_OFF},     {HSV_OFF},     {HSV_OFF},          {HSV_RED},       {HSV_RED},       {HSV_RED}                                                         \
 );
 
-int sym_layer_led[TOTAL_LEDS][3] = LED_MAP( \
-                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
-                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},           \
-      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
-      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_PINK},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
-      {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, \
-                                          {HSV_OFF},  {HSV_OFF},  {HSV_OFF},          {HSV_OFF},  {HSV_OFF},  {HSV_OFF}                 \
+int sym_layer_led[TOTAL_LEDS][3] = LED_MAP(                                                                                                                                  \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                      \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                      \
+      {HSV_OFF},  {HSV_YELLOW}, {HSV_BLUE},  {HSV_BLUE},  {HSV_WHITE}, {HSV_YELLOW},        {HSV_OFF},  {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_WHITE}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_RED},    {HSV_BLUE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_MAGENTA},       {HSV_OFF},  {HSV_GREEN},   {HSV_GREEN},   {HSV_GREEN},   {HSV_GREEN}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_RED},    {HSV_BLUE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_RED},           {HSV_OFF},  {HSV_BLUE},    {HSV_BLUE},    {HSV_OFF},     {HSV_OFF},   {HSV_OFF}, \
+                                             {HSV_WHITE}, {HSV_WHITE}, {HSV_MAGENTA},       {HSV_OFF},  {HSV_OFF},     {HSV_OFF}                                             \
+);
+
+int fun_layer_led[TOTAL_LEDS][3] = LED_MAP(                                                                                                                                  \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                      \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                      \
+      {HSV_OFF},  {HSV_BLUE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_GREEN},          {HSV_OFF},  {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_WHITE}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_BLUE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_OFF},            {HSV_OFF},  {HSV_GREEN},   {HSV_GREEN},   {HSV_GREEN},   {HSV_GREEN}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_BLUE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_OFF},            {HSV_OFF},  {HSV_BLUE},    {HSV_BLUE},    {HSV_OFF},     {HSV_OFF},   {HSV_OFF}, \
+                                            {HSV_OFF},  {HSV_WHITE},  {HSV_WHITE},          {HSV_OFF},  {HSV_OFF},     {HSV_OFF}                                             \
+);
+
+int button_layer_led[TOTAL_LEDS][3] = LED_MAP(                                                                                                                           \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                  \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                  \
+      {HSV_OFF},  {HSV_WHITE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_WHITE},          {HSV_WHITE}, {HSV_BLUE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_WHITE}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_GREEN},  {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_MAGENTA},        {HSV_OFF},   {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_OFF}, \
+      {HSV_OFF},  {HSV_WHITE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_WHITE},          {HSV_WHITE}, {HSV_BLUE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_WHITE}, {HSV_OFF}, \
+                                             {HSV_RED},   {HSV_RED},   {HSV_RED},            {HSV_RED},   {HSV_RED},   {HSV_RED}                                         \
 );
 
 rgb_state_t rgb_state = {
@@ -211,6 +229,12 @@ bool rgb_matrix_indicators_user(void)
         case SYM:
             layout = sym_layer_led;
             break;
+        case BUTTON:
+            layout = button_layer_led;
+            break;
+        case FUN:
+            layout = fun_layer_led;
+            break;
         default:
             is_perkey_layer = false;
             break;
@@ -218,7 +242,7 @@ bool rgb_matrix_indicators_user(void)
 
     if(is_perkey_layer) {
         for(int i = 0; i < TOTAL_LEDS; i++) {
-        int led_trans[3] = {1,1,1};
+        int led_trans[3] = {HSV_TRANS};
         if (memcmp(layout[i], led_trans, sizeof(layout[i]))) {
             RGB rgb = hsv_to_rgb((HSV){layout[i][0], layout[i][1], (layout[i][2] < rgb_matrix_get_val())? layout[i][2] : rgb_matrix_get_val()});
             rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
