@@ -51,16 +51,17 @@ L50, L51, L52, L53 \
 
 static const int underglow_leds[UNDERGLOW_NUM] = {0, 1, 2, 3, 4, 5, 27, 28, 29, 30, 31, 32};
 
-#define NAV_LAYER_LED LED_MAP(                                                                                                                                                            \
-                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                                    {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                           \
-                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                                    {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                           \
+
+static const int nav_layer_led[NUM_LEDS][3] = LED_MAP(                                                                                                                                               \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                                    {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                                   \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                                    {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                                   \
       {HSV_OFF},  {HSV_WHITE}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_OFF},          {HSV_WHITE},     {HSV_BLUE},      {HSV_BLUE},    {HSV_BLUE},    {HSV_WHITE},   {HSV_OFF}, \
       {HSV_OFF},  {HSV_GREEN}, {HSV_GREEN},   {HSV_GREEN},   {HSV_GREEN},   {HSV_OFF},          {HSV_RED},       {HSV_YELLOW},    {HSV_YELLOW},  {HSV_YELLOW},  {HSV_YELLOW},  {HSV_OFF}, \
       {HSV_OFF},  {HSV_OFF},   {HSV_OFF},     {HSV_BLUE},    {HSV_BLUE},    {HSV_OFF},          {HSV_RED},       {HSV_MAGENTA},   {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_OFF}, \
                                               {HSV_OFF},     {HSV_OFF},     {HSV_OFF},          {HSV_GOLDENROD}, {HSV_GOLDENROD}, {HSV_GOLDENROD}                                         \
 );
 
-#define NUM_LAYER_LED LED_MAP(                                                                                                                                             \
+static const int num_layer_led[NUM_LEDS][3] = LED_MAP(                                                                                                                                \
                             {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                    \
                             {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                    \
       {HSV_OFF},  {HSV_CYAN},   {HSV_RED},  {HSV_RED},   {HSV_RED},  {HSV_CYAN},          {HSV_OFF},  {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_WHITE}, {HSV_OFF}, \
@@ -69,7 +70,7 @@ static const int underglow_leds[UNDERGLOW_NUM] = {0, 1, 2, 3, 4, 5, 27, 28, 29, 
                                             {HSV_WHITE}, {HSV_RED},  {HSV_MAGENTA},       {HSV_OFF},  {HSV_OFF},     {HSV_OFF}                                             \
 );
 
-#define MEDIA_LAYER_LED LED_MAP(                                                                                                                                                        \
+static const int media_layer_led[NUM_LEDS][3] = LED_MAP(                                                                                                                                           \
                             {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                                    {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                         \
                             {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                                    {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                         \
       {HSV_OFF},  {HSV_WHITE}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_OFF},          {HSV_PINK},      {HSV_PINK},      {HSV_PINK}, {HSV_PINK}, {HSV_SPRINGGREEN}, {HSV_OFF}, \
@@ -78,16 +79,16 @@ static const int underglow_leds[UNDERGLOW_NUM] = {0, 1, 2, 3, 4, 5, 27, 28, 29, 
                                               {HSV_OFF},     {HSV_OFF},     {HSV_OFF},          {HSV_GOLDENROD}, {HSV_GOLDENROD}, {HSV_BLUE}                                                                                                                                                                                                    \
 );
 
-#define MOUSE_LAYER_LED LED_MAP(                                                                                                                                                                    \
-                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                                    {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                                     \
-                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                                    {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                                     \
+static const int mouse_layer_led[NUM_LEDS][3] = LED_MAP(                                                                                                                                                       \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                                    {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                                             \
+                            {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                                    {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                                             \
       {HSV_OFF},  {HSV_WHITE}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_OFF},          {HSV_WHITE},     {HSV_BLUE},      {HSV_BLUE},    {HSV_BLUE},    {HSV_WHITE},   {HSV_OFF},           \
       {HSV_OFF},  {HSV_GREEN}, {HSV_GREEN},   {HSV_GREEN},   {HSV_GREEN},   {HSV_OFF},          {HSV_OFF},       {HSV_YELLOW},    {HSV_YELLOW},  {HSV_YELLOW},  {HSV_YELLOW},  {HSV_OFF},           \
       {HSV_OFF},  {HSV_OFF},   {HSV_OFF},     {HSV_BLUE},    {HSV_BLUE},    {HSV_OFF},          {HSV_OFF},       {HSV_MAGENTA},   {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_OFF},           \
                                               {HSV_OFF},     {HSV_OFF},     {HSV_OFF},          {HSV_RED},       {HSV_RED},       {HSV_RED}                                                         \
 );
 
-#define SYM_LAYER_LED LED_MAP(                                                                                                                                               \
+static const int sym_layer_led[NUM_LEDS][3] = LED_MAP(                                                                                                                                  \
                             {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                      \
                             {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                      \
       {HSV_OFF},  {HSV_YELLOW}, {HSV_BLUE},  {HSV_BLUE},  {HSV_WHITE}, {HSV_YELLOW},        {HSV_OFF},  {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_WHITE}, {HSV_OFF}, \
@@ -96,7 +97,7 @@ static const int underglow_leds[UNDERGLOW_NUM] = {0, 1, 2, 3, 4, 5, 27, 28, 29, 
                                              {HSV_WHITE}, {HSV_WHITE}, {HSV_MAGENTA},       {HSV_OFF},  {HSV_OFF},     {HSV_OFF}                                             \
 );
 
-#define FUN_LAYER_LED LED_MAP(                                                                                                                                               \
+static const int fun_layer_led[NUM_LEDS][3] = LED_MAP(                                                                                                                                  \
                             {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                      \
                             {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                      \
       {HSV_OFF},  {HSV_BLUE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_GREEN},          {HSV_OFF},  {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_WHITE}, {HSV_OFF}, \
@@ -105,7 +106,7 @@ static const int underglow_leds[UNDERGLOW_NUM] = {0, 1, 2, 3, 4, 5, 27, 28, 29, 
                                             {HSV_OFF},  {HSV_WHITE},  {HSV_WHITE},          {HSV_OFF},  {HSV_OFF},     {HSV_OFF}                                             \
 );
 
-#define BUTTON_LAYER_LED LED_MAP(                                                                                                                                        \
+static const int button_layer_led[NUM_LEDS][3] = LED_MAP(                                                                                                                           \
                             {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                  \
                             {HSV_TRANS},  {HSV_TRANS},  {HSV_TRANS},                            {HSV_TRANS},  {HSV_TRANS}, {HSV_TRANS},                                  \
       {HSV_OFF},  {HSV_WHITE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_WHITE},          {HSV_WHITE}, {HSV_BLUE},  {HSV_BLUE},  {HSV_BLUE},  {HSV_WHITE}, {HSV_OFF}, \

@@ -147,29 +147,29 @@ bool dynamic_macro_record_end_user(int8_t direction) {
 bool rgb_matrix_indicators_user(void)
 {
 
-    int (*layout)[3];
+    const int (*layout)[3];
     bool is_perkey_layer = true;
     switch (get_highest_layer(layer_state)) {
         case NAV:
-            layout = (int[NUM_LEDS][3]) NAV_LAYER_LED;
+            layout = nav_layer_led;
             break;
         case MOUSE:
-            layout = (int[NUM_LEDS][3]) MOUSE_LAYER_LED;
+            layout = mouse_layer_led;
             break;
         case MEDIA:
-            layout = (int[NUM_LEDS][3]) MEDIA_LAYER_LED;
+            layout = media_layer_led;
             break;
         case NUM:
-            layout = (int[NUM_LEDS][3]) NUM_LAYER_LED;
+            layout = num_layer_led;
             break;
         case SYM:
-            layout = (int[NUM_LEDS][3]) SYM_LAYER_LED;
+            layout = sym_layer_led;
             break;
         case BUTTON:
-            layout = (int[NUM_LEDS][3]) BUTTON_LAYER_LED;
+            layout = button_layer_led;
             break;
         case FUN:
-            layout = (int[NUM_LEDS][3]) FUN_LAYER_LED;
+            layout = fun_layer_led;
             break;
         default:
             is_perkey_layer = false;
